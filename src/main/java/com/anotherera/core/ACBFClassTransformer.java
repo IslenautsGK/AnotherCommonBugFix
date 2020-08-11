@@ -130,7 +130,7 @@ public class ACBFClassTransformer implements IClassTransformer {
 				}
 				int index = line.indexOf('#');
 				if (index == 0) {
-					comment = line.substring(index);
+					comment = line;
 					continue;
 				} else if (index > 0) {
 					line = line.substring(0, index).trim();
@@ -238,7 +238,7 @@ public class ACBFClassTransformer implements IClassTransformer {
 					}
 					int index = line.indexOf('#');
 					if (index == 0) {
-						comment = line.substring(index);
+						comment = line;
 						continue;
 					} else if (index > 0) {
 						line = line.substring(0, index).trim();
