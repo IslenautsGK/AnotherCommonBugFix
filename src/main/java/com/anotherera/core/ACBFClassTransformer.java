@@ -122,6 +122,12 @@ public class ACBFClassTransformer implements IClassTransformer {
 				if (line.isEmpty()) {
 					continue;
 				}
+				if (line.charAt(0) == 0xFEFF) {
+					line = line.substring(1);
+				}
+				if (line.isEmpty()) {
+					continue;
+				}
 				int index = line.indexOf('#');
 				if (index == 0) {
 					comment = line.substring(index);
@@ -221,6 +227,12 @@ public class ACBFClassTransformer implements IClassTransformer {
 				String comment = null;
 				while ((line = br.readLine()) != null) {
 					line = line.trim();
+					if (line.isEmpty()) {
+						continue;
+					}
+					if (line.charAt(0) == 0xFEFF) {
+						line = line.substring(1);
+					}
 					if (line.isEmpty()) {
 						continue;
 					}
