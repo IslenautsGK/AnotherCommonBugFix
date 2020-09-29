@@ -58,6 +58,16 @@ dependencies {
 
 }
 
+sourceSets {
+    api
+    fix
+    main {
+        java {
+            srcDirs "src/api/java"
+        }
+    }
+}
+
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
@@ -75,6 +85,21 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+task apiJar(type: Jar) {
+    classifier = 'api'
+    from sourceSets.api.allSource
+}
+
+task fixJar(type: Jar) {
+    classifier = 'fix'
+    from sourceSets.fix.allSource
+}
+
+artifacts {
+    archives apiJar
+    archives fixJar
 }
 
 jar {
