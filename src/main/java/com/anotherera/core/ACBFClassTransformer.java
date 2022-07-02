@@ -35,6 +35,8 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.LaunchClassLoader;
+import net.minecraftforge.fml.common.asm.ASMTransformerWrapper;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class ACBFClassTransformer implements IClassTransformer {
 
@@ -404,7 +406,11 @@ public class ACBFClassTransformer implements IClassTransformer {
 			@SuppressWarnings("resource")
 			LaunchClassLoader lcl = (LaunchClassLoader) cl;
 			for (IClassTransformer ict : lcl.getTransformers()) {
-				if (ict instanceof ACBFClassTransformer) {
+				if (ict instanceof ASMTransformerWrapper.TransformerWrapper) {
+					if (ReflectionHelper.getPrivateValue(ASMTransformerWrapper.TransformerWrapper.class, (ASMTransformerWrapper.TransformerWrapper)ict, "parent") instanceof ACBFClassTransformer) {
+						break;
+					}
+				} else if (ict instanceof ACBFClassTransformer) {
 					break;
 				}
 				bytes = ict.transform(name, transformedName, bytes);
